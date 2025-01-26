@@ -1,12 +1,24 @@
 require('@nomicfoundation/hardhat-toolbox');
+require('dotenv').config();
 
 module.exports = {
-  solidity: '0.8.17', // Matches the version you used to write the KindCoin contract
+  solidity: {
+    compilers: [
+      {
+        version: '0.8.28', // For contracts like Lock.sol
+      },
+      {
+        version: '0.8.20', // For OpenZeppelin dependencies
+      },
+      {
+        version: '0.8.17', // Your KindCoin contract
+      },
+    ],
+  },
   networks: {
-    goerli: {
-      // Configures the Goerli testnet
-      url: 'https://eth-sepolia.g.alchemy.com/v2/UpgohQ0jaKQHlZUrJ9dg_Yit8rp3OATG', // Alchemy's node URL
-      accounts: ['YOUR_PRIVATE_KEY'], // Your wallet private key
+    sepolia: {
+      url: process.env.ALCHEMY_API_URL, // Alchemy or Infura URL stored in .env
+      accounts: [process.env.ETH_PRIVATE_KEY], // Your wallet private key stored in .env
     },
   },
 };
